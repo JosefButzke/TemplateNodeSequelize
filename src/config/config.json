@@ -2,10 +2,14 @@
   "development": {
     "username": "postgres",
     "password": "docker",
-    "database": "database",
-    "host": "127.0.0.1",
+    "database": "busca_serv",
+    "host": "localhost",
     "dialect": "postgres",
-    "operatorsAliases": false
+    "define": {
+      "timestamps": "true",
+      "underscored": "true",
+      "underscoredAll": "true"
+    }
   },
   "test": {
     "username": "root",

@@ -1,16 +1,24 @@
-const Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
+import databaseConfig from '../config/config.json';
 
-const sequelize = new Sequelize('database', 'postgres', 'docker', {
-  host: 'localhost',
-  dialect: 'postgres'
-});
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
+import TypeUser from '../app/models/TypeUser';
+import User from '../app/models/User';
+import Address from '../app/models/Address';
 
-  module.exports = sequelize;
+const models = [User, Address, TypeUser];
+
+class Database {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        this.connection = new Sequelize(databaseConfig.development);
+
+        models
+            .map(model => model.init(this.connection))
+            .map(model => model.associate && model.associate(this.connection.models));
+    }
+}
+
+export default new Database();
