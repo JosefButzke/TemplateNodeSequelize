@@ -4,12 +4,9 @@ import Address from '../models/Address';
 import TypeUser from '../models/TypeUser'
 
 class SessionController {
-    async index(req, res) {
-        const response = await User.findAndCountAll({
-            include: [{ model: Address, as: 'address_id' }, { model: TypeUser, as: 'type_user_id' }],
-            
-        });
-        return res.json(response)
+    async store(req, res) {
+        const { nome, phone, email, type_user, address } = req.body;
+        res.json({ nome, phone, email, type_user, address })
     }
 }
 
